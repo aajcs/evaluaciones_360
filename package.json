@@ -1,0 +1,31 @@
+{
+  "name": "evaluaciones_360",
+  "version": "1.0.0",
+  "description": "Backend para evaluacion test de desarrollador full stack",
+  "homepage": "https://github.com/aajcs/evaluaciones_360#readme",
+  "bugs": {
+    "url": "https://github.com/aajcs/evaluaciones_360/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aajcs/evaluaciones_360.git"
+  },
+  "license": "ISC",
+  "author": "AAJCS",
+  "type": "commonjs",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app",
+    "dev": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "socket.io": "^4.8.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}
