@@ -22,7 +22,11 @@ class Server {
 
     this.app.use(cors());
     this.app.use(express.json());
-    this.app.use("/api/user", require("../routes/user"));
+    this.app.use("/api/auth", require("../routes/user"));
+    this.app.use("/api/employees", require("../routes/employee"));
+    this.app.use("/api/evaluations", require("../routes/evaluation"));
+    // this.app.use("/api/questions", require("../routes/question"));
+    this.app.use("/api/answers", require("../routes/answer"));
   }
   configureSockets() {
     new Sockets(this.io);

@@ -6,7 +6,7 @@ const generarJWT = (id) => {
 
     jwt.sign(
       payload,
-      process.env.RIVATE_KEY,
+      process.env.PRIVATE_KEY,
       {
         expiresIn: "7d",
       },
@@ -24,7 +24,7 @@ const generarJWT = (id) => {
 
 const comprobarJWT = (token = "") => {
   try {
-    const { id } = jwt.verify(token, process.env.RIVATE_KEY);
+    const { id } = jwt.verify(token, process.env.PRIVATE_KEY);
 
     return [true, id];
   } catch (error) {

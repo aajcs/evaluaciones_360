@@ -1,29 +1,29 @@
 const { Schema, model } = require("mongoose");
 
-const userSchema = new Schema(
+const AnswerSchema = new Schema(
   {
-    userName: {
+    questionId: {
+      type: Schema.Types.ObjectId,
+      ref: "Question",
+      required: true,
+    },
+    userID: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    evaluationId: {
+      type: Schema.Types.ObjectId,
+      ref: "Evaluation",
+      required: true,
+    },
+    selectedAnswer: {
       type: String,
       required: true,
     },
-    email: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-    password: {
-      type: String,
-      required: true,
-    },
-    role: {
-      type: String,
-      enum: ["ADMIN_ROLE", "MANAGER_ROLE", "EMPLOYEE_ROLE", "USER_ROLE"],
-      required: true,
-      default: "EMPLOYEE_ROLE",
-    },
-    online: {
+    isCorrect: {
       type: Boolean,
-      default: false,
+      required: true,
     },
   },
   {
@@ -31,13 +31,12 @@ const userSchema = new Schema(
   }
 );
 
-userSchema.set("toJSON", {
+AnswerSchema.set("toJSON", {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString();
     delete returnedObject._id;
     delete returnedObject.__v;
-    delete returnedObject.password;
   },
 });
 
-module.exports = model("User", userSchema);
+module.exports = model("Answer", AnswerSchema);

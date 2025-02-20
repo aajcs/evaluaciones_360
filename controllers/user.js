@@ -5,8 +5,8 @@ const bcryptjs = require("bcryptjs");
 const createUser = async (req, res) => {
   try {
     console.log(req.body);
-    const { userName, email, password } = req.body;
-    const user = new User({ userName, email, password });
+    const { userName, email, password, role } = req.body;
+    const user = new User({ userName, email, password, role });
 
     // Encriptar la contraseña
     const salt = bcryptjs.genSaltSync();
@@ -30,6 +30,14 @@ const getUsers = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+const getUserEmployees = async (req, res) => {
+  try {
+    const users = await User.find({ role: "EMPLOYEE_ROLE" });
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 
 const getUser = async (req, res) => {
   try {
@@ -44,8 +52,17 @@ const getUser = async (req, res) => {
 const updateUser = async (req, res) => {
   try {
     const { id } = req.params;
-    const { nombre, email, password } = req.body;
-    const user = await User.findByIdAndUpdate(id, { nombre, email, password });
+    const { userName, email, password, role } = req.body;
+    const user = await User.findByIdAndUpdate(
+      id,
+      {
+        userName,
+        email,
+        password,
+        role,
+      },
+      { new: true }
+    );
     res.json(user);
   } catch (error) {
     res.status(404).json({ message: error.message });
@@ -75,11 +92,11 @@ const login = async (req, res) => {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(400).json({ message: "Invalid User / Password" });
+      return res.status(400).json({ message: "Invalid User / Password2" });
     }
     const validPassword = bcryptjs.compareSync(password, user.password);
     if (!validPassword) {
-      return res.status(400).json({ message: "Invalid User / Password" });
+      return res.status(400).json({ message: "Invalid User / Passworda" });
     }
     const token = await generarJWT(user.id);
     res.json({ user, token });
@@ -91,6 +108,7 @@ const login = async (req, res) => {
 module.exports = {
   createUser,
   getUsers,
+  getUserEmployees,
   getUser,
   updateUser,
   deleteUser,
